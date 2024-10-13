@@ -1,0 +1,72 @@
+<div class="header">
+  <img class="logo"
+       src="../../../assets/logo.svg" 
+       alt="logo">
+  <span class="text">draw.ink</span>
+</div>
+<div class="content">
+  <div class="canvas-container" 
+       #canvasContainer>
+    <div class="canvas-tools canvas-mode">
+      <span>Mode: {{ canvasMode }}</span>
+    </div>
+    <svg-canvas [drag]=" isCanvasDragging"
+                [penSize]="penSize"
+                [penColor]="penColor"
+                (zoomLevelChange)="updateZoomLevel($event)">
+    </svg-canvas>
+    <div class="canvas-tools canvas-size">
+      <span>{{ canvasSize }}</span>
+    </div>
+    <div class="canvas-tools canvas-zoom"
+         (click)="toggleZoomSlider()">
+      <span>{{ zoomLevel }}%</span>
+    </div>
+    <div *ngIf="isZoomSliderVisible" 
+         class="canvas-tools zoom-slider" 
+         [ngClass]="{'fade-out': isFadingOut}">
+      <input orient="vertical"
+             type="range"
+             min="50"
+             max="100000"
+             [value]="zoomLevel"
+             (input)="onZoomSliderChange($event)">
+    </div>
+  </div>
+  <div class="tools-container">
+    <div class="button-group">
+      <button (click)="choosePen($event)">
+        <img class="logo"
+             src="../../../assets/logo.svg" 
+             alt="logo">
+      </button>
+      <button (click)="choosePan($event)">
+        <img class="pan"
+            src="../../../assets/pan_tool.svg" 
+            alt="pan">
+      </button>
+      <button (click)="saveCanvas($event)">
+        <img class="save"
+             src="../../../assets/save.svg" 
+             alt="save">
+      </button>
+      <!-- <button (click)="chooseEraser($event)">Ластик</button> -->
+    </div>
+    <div class="field">
+      <span>Pen size:</span>
+      <input type="range"
+             min="0.1"
+             max="100"
+             [value]="penSize"
+             (input)="onPenSizeChange($event)">
+      <span>{{ penSize }} px</span>
+    </div>
+    <div class="field">
+      <span>Pen color:</span>
+      <input type="color"
+             [value]="penColor"
+             (input)="onPenColorChange($event)">
+      <span>{{ penColor }}</span>
+    </div>
+  </div>
+</div>
